@@ -1,7 +1,9 @@
 const app = require('./app');
 const mongoose = require('mongoose');
+require('dotenv').config({ path: 'MONGO_URL' });
 
 const { MONGO_URL, PORT = 5001 } = process.env;
+mongoose.set('strictQuery', true);
 
 mongoose
   .connect(MONGO_URL)
