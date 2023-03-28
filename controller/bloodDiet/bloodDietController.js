@@ -18,6 +18,7 @@ const getBloodDietProduct = async (req, res, next) => {
 };
 
 const addBloodDietProduct = async (req, res, next) => {
+  
   const { _id } = req.user;
   const user = await User.findById(_id);
   console.log(user);
