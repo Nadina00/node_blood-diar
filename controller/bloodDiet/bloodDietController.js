@@ -8,24 +8,19 @@ const getBloodDietProduct = async (req, res, next) => {
   if (!user) {
     throw RequestError(401, "Unauthorized");
   }
-try{
-  const product = await BloodDietProduct({});
-  res.json({
-    status: "success",
-    code: 200,
-    product,
-  });
-}catch(e){
-  res.json({
-    status: "error",
-    code: 401,
-    result,
-  })
-}
+  try {
+    const product = await BloodDietProduct({});
+    res.json({
+      status: "success",
+      code: 200,
+      product,
+    });
+  } catch (e) {
+    throw RequestError(400, "Bad Request");
+  }
 };
 
 const addBloodDietProduct = async (req, res, next) => {
-  
   const { _id } = req.user;
   const user = await User.findById(_id);
   console.log(user);
@@ -80,20 +75,16 @@ const getDateBloodDietProduct = async (req, res, next) => {
     throw RequestError(401, "Unauthorized");
   }
   const { date } = req.query;
-  try{
-  const result = await BloodDietProduct.find({ date, owner: _id });
-  res.json({
-    status: "success",
-    code: 200,
-    result,
-  });
-} catch(e){
-  res.json({
-    status: "error",
-    code: 401,
-    result,
-  })
-}
+  try {
+    const result = await BloodDietProduct.find({ date, owner: _id });
+    res.json({
+      status: "success",
+      code: 200,
+      result,
+    });
+  } catch (e) {
+    throw RequestError(400, "Bad Request");
+  }
 };
 
 const deleteBloodDietProduct = async (req, res, next) => {
