@@ -8,13 +8,20 @@ const getBloodDietProduct = async (req, res, next) => {
   if (!user) {
     throw RequestError(401, "Unauthorized");
   }
-
+try{
   const product = await BloodDietProduct({});
   res.json({
     status: "success",
     code: 200,
     product,
   });
+}catch(e){
+  res.json({
+    status: "error",
+    code: 401,
+    result,
+  })
+}
 };
 
 const addBloodDietProduct = async (req, res, next) => {
@@ -73,12 +80,20 @@ const getDateBloodDietProduct = async (req, res, next) => {
     throw RequestError(401, "Unauthorized");
   }
   const { date } = req.query;
+  try{
   const result = await BloodDietProduct.find({ date, owner: _id });
   res.json({
     status: "success",
     code: 200,
     result,
   });
+} catch(e){
+  res.json({
+    status: "error",
+    code: 401,
+    result,
+  })
+}
 };
 
 const deleteBloodDietProduct = async (req, res, next) => {
