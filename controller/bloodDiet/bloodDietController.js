@@ -69,10 +69,14 @@ const addBloodDietProduct = async (req, res, next) => {
 
 const getDateBloodDietProduct = async (req, res, next) => {
   const { _id } = req.user;
-  const user = await User.findById(_id);
+  try {
+    const user = await User.findById(_id);
 
-  if (!user) {
-    throw RequestError(401, "Unauthorized");
+    if (!user) {
+      throw RequestError(401, "Unauthorized");
+    }
+  } catch (e) {
+    throw RequestError(400, "Bad Request");
   }
   const { date } = req.query;
   try {
