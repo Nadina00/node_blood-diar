@@ -8,16 +8,15 @@ const getBloodDietProduct = async (req, res, next) => {
   if (!user) {
     throw RequestError(401, "Unauthorized");
   }
-  try {
-    const product = await BloodDietProduct({});
-    res.json({
-      status: "success",
-      code: 200,
-      product,
-    });
-  } catch (e) {
-    throw RequestError(400, "Bad Request");
+  const product = await BloodDietProduct({});
+  if (!result.length) {
+    throw RequestError(404, "Products not found");
   }
+  res.json({
+    status: "success",
+    code: 200,
+    product,
+  });
 };
 
 const addBloodDietProduct = async (req, res, next) => {
@@ -79,7 +78,7 @@ const getDateBloodDietProduct = async (req, res, next) => {
   const { date } = req.query;
 
   const result = await BloodDietProduct.find({ date, owner: _id });
-  
+
   if (!result.length) {
     throw RequestError(404, "Added products not found on this date");
   }
