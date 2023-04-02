@@ -6,6 +6,7 @@ const secret = `${process.env.SECRET}`;
 
 const fs = require("fs/promises");
 const path = require("path");
+const { token } = require("morgan");
 
 const register = async (req, res) => {
   const { name, email, password, blood, dailyCalories } = req.body;
@@ -83,6 +84,7 @@ const logout = async (req, res, next) => {
     { token: null },
     { new: true }
   );
+  
   return res.json({
     status: "success",
     code: 204,

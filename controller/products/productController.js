@@ -49,8 +49,6 @@ const dailyСalories = async (req, res) => {
   });
 };
 
-
-
 module.exports = {
   productList,
   productListByType,

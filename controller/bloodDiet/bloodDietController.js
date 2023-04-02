@@ -78,10 +78,9 @@ const getDateBloodDietProduct = async (req, res, next) => {
   const { date } = req.query;
 
   const result = await BloodDietProduct.find({ date, owner: _id });
+  console.log(result)
 
-  if (!result.length) {
-    throw RequestError(404, "Added products not found on this date");
-  }
+ 
   res.json({
     status: "success",
     code: 200,
@@ -92,7 +91,7 @@ const getDateBloodDietProduct = async (req, res, next) => {
 const deleteBloodDietProduct = async (req, res, next) => {
   const { id } = req.params;
   const result = await BloodDietProduct.findByIdAndRemove(id);
-  console.log(result);
+   console.log(result);
   res.json({
     status: "success",
     code: 200,
