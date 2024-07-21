@@ -6,11 +6,11 @@ const getBloodDietProduct = async (req, res, next) => {
   const { id } = req.user;
   const user = await User.findById(id);
   if (!user) {
-    throw RequestError(401, "Unauthorized");
+    return next(RequestError(401, "Unauthorized"));
   }
   const product = await BloodDietProduct({});
-  if (!result.length) {
-    throw RequestError(404, "Products not found");
+  if (!product.length) {
+    return next(RequestError(404, "Products not found"));
   }
   res.json({
     status: "success",
@@ -22,13 +22,11 @@ const getBloodDietProduct = async (req, res, next) => {
 const addBloodDietProduct = async (req, res, next) => {
   const { _id } = req.user;
   const user = await User.findById(_id);
-  console.log(user);
   if (!user) {
-    throw RequestError(401, "Unauthorized");
+    return next(RequestError(401, "Unauthorized"));
   }
 
   const { date, caloricityPerDay, product, weight, baseCaloriti } = req.body;
-  console.log({ date, caloricityPerDay, product, weight, baseCaloriti });
   const sum = (weight * baseCaloriti) / 100;
   const products = await BloodDietProduct.find({ date, owner: _id });
   const duplex = products.find((it) => it.product === product);
@@ -39,6 +37,11 @@ const addBloodDietProduct = async (req, res, next) => {
       ...req.body,
       sum,
       owner: _id,
+    });
+    res.status(201).json({
+      status: "success",
+      code: 201,
+      result,
     });
   } else {
     result = await BloodDietProduct.findByIdAndUpdate(
@@ -52,35 +55,25 @@ const addBloodDietProduct = async (req, res, next) => {
         new: true,
       }
     );
+    res.json({
+      status: "success",
+      code: 200,
+      result,
+    });
   }
-  !duplex
-    ? res.status(201).json({
-        status: "succes",
-        code: 201,
-        result,
-      })
-    : res.json({
-        status: "success",
-        code: 200,
-        result,
-      });
 };
 
 const getDateBloodDietProduct = async (req, res, next) => {
   const { _id } = req.user;
-
   const user = await User.findById(_id);
 
   if (!user) {
-    throw RequestError(401, "Unauthorized");
+    return next(RequestError(401, "Unauthorized"));
   }
 
   const { date } = req.query;
-
   const result = await BloodDietProduct.find({ date, owner: _id });
-  console.log(result)
-
- 
+  
   res.json({
     status: "success",
     code: 200,
@@ -91,7 +84,6 @@ const getDateBloodDietProduct = async (req, res, next) => {
 const deleteBloodDietProduct = async (req, res, next) => {
   const { id } = req.params;
   const result = await BloodDietProduct.findByIdAndRemove(id);
-   console.log(result);
   res.json({
     status: "success",
     code: 200,
@@ -100,8 +92,8 @@ const deleteBloodDietProduct = async (req, res, next) => {
 };
 
 module.exports = {
-  getBloodDietProduct,
-  addBloodDietProduct,
-  getDateBloodDietProduct,
-  deleteBloodDietProduct,
+  getBloodDietProduct: ctrlWrapper(getBloodDietProduct),
+  addBloodDietProduct: ctrlWrapper(addBloodDietProduct),
+  getDateBloodDietProduct: ctrlWrapper(getDateBloodDietProduct),
+  deleteBloodDietProduct: ctrlWrapper(deleteBloodDietProduct),
 };

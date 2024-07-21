@@ -6,7 +6,7 @@ const { token } = require("morgan");
 const productList = async (req, res, next) => {
   const result = await Product.find({});
   if (!result) {
-    throw RequestError(404, "Not found");
+    return next(RequestError(404, "Not found"));
   }
   res.json({
     status: "success",
@@ -41,8 +41,8 @@ const dailyСalories = async (req, res) => {
     161 -
     10 * Number(desiredWeight);
   console.log("dailyRate", dailyRate);
-  
-     res.json({
+
+  res.json({
     status: "success",
     code: 200,
     dailyRate,
@@ -53,5 +53,4 @@ module.exports = {
   productList,
   productListByType,
   dailyСalories,
-  
 };
