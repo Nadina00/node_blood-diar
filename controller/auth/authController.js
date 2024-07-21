@@ -79,7 +79,7 @@ const logIn = async (req, res) => {
 };
 
 const logout = async (req, res, next) => {
-  await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     { _id: req.user.id },
     { token: null },
     { new: true }
@@ -90,6 +90,7 @@ const logout = async (req, res, next) => {
     code: 204,
     data: {
       message: "No Content",
+      user
     },
   });
 };
