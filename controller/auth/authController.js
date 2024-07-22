@@ -1,5 +1,6 @@
 const { User } = require("../../models/user");
-const RequestError = require("../../helpers/RequstError").default;
+//const RequestError = require("../../helpers/RequstError").default;
+const ctrlWrapper = require("../../helpers/ctrlWrapper")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = `${process.env.SECRET}`;
