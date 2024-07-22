@@ -1,4 +1,4 @@
-const ctrlWrapper = require("../helpers/ctrlWrapper").default;
+const ctrlWrapper = require("../helpers/ctrlWrapper");
 const authMiddelwar = require("../middelwares/authMiddelwar");
 const express = require("express");
 const router = express.Router();
