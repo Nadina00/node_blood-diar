@@ -1,5 +1,5 @@
 const RequestError = require("../../helpers/RequstError").default;
-const ctrlWrapper = require("../../helpers/ctrlWrapper")
+const ctrlWrapper = require('../../helpers/ctrlWrapper')
 const { BloodDietProduct } = require("../../models/bloodDietProduct");
 const { User } = require("../../models/user");
 
