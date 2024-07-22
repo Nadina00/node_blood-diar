@@ -1,6 +1,6 @@
 const app = require('./app');
 const mongoose = require('mongoose');
-require('dotenv').config({ path: 'MONGO_URL' });
+require('dotenv').config();
 
 const { MONGO_URL, PORT = 10000 } = process.env;
 mongoose.set('strictQuery', true);
@@ -9,8 +9,9 @@ mongoose
   .connect(MONGO_URL)
   .then(() => {
     console.log('Database connection successful');
-    console.log('Server running. Use our API on port: 5000');
-    app.listen(PORT);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running. Use our API on port: ${PORT}`);
+    });
   })
   .catch(error => {
     console.log(error.message);
