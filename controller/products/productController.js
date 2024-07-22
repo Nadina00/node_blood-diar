@@ -1,5 +1,5 @@
 const { Product } = require("../../models/product");
-const RequestError = require("../../helpers/RequstError").default;
+const RequestError = require("../../helpers/RequstError");
 const { User } = require("../../models/user");
 const { token } = require("morgan");
 

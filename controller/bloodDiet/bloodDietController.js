@@ -1,4 +1,4 @@
-const RequestError = require("../../helpers/RequstError").default;
+const RequestError = require("../../helpers/RequstError");
 const ctrlWrapper = require('../../helpers/ctrlWrapper')
 const { BloodDietProduct } = require("../../models/bloodDietProduct");
 const { User } = require("../../models/user");
